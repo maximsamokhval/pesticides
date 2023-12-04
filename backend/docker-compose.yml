@@ -1,0 +1,47 @@
+version: '3'
+services:
+  redis:
+    image: redis:latest
+    container_name: pesticides-redis
+    restart: on-failure
+    ports:
+      - "6379:6379"
+    healthcheck:
+        test: ["CMD", "redis-cli", "ping"]
+        interval: 1s
+        timeout: 3s
+        retries: 30      
+    volumes:
+      - redis-data:/data
+  flask:
+    build: 
+      context: .
+    container_name: pesticides
+    command: gunicorn -w 8 --bind 0.0.0.0:5000 wsgi:app
+    # flask requires SIGINT to stop gracefully
+    # (default stop signal from Compose is SIGTERM)
+    stop_signal: SIGINT
+    healthcheck:
+      test: curl --fail -s http://localhost:5000/ || exit 1
+      interval: 1m30s
+      timeout: 10s
+      retries: 3   
+    environment:
+      ENDPOINT: https://ib.interstarch.com.ua/interstarch/hs/pesticides/v1/status
+      ENDPOINT_LOGIN: Reader HTTP pesticides
+      ENDPOINT_PASSWORD: 3141592
+      SECRET_CODE: 192b9bdd22ab9ed4d12e236c78afcb9a393ec15f71bbf5dc987d54727823bcbf
+      FLASK_ENV: production
+    ports:
+      - "8338:5000"
+    restart: on-failure
+    volumes:
+      - .:/backend
+    depends_on:
+      - redis
+
+volumes:
+  pesticides:
+    driver: local
+  redis-data:
+    driver: local
