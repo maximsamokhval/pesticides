@@ -1,0 +1,2 @@
+set SONAR_SCANNER_OPTS=-Xmx8g
+sonar-scanner.bat -D"sonar.projectKey=pesticides" -D"sonar.sources=." -D"sonar.host.url=http://sonarqube:9000/" -D"sonar.login=sqp_a68672b0ec62f4d2f5b071dd287aeedb19cbdcf7"
