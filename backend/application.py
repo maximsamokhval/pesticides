@@ -1,18 +1,16 @@
-from flask import Flask, render_template
+import logging
+import os
+from logging.handlers import RotatingFileHandler
 
 import redis
 import requests
+from flask import Flask, render_template
 from requests.auth import HTTPBasicAuth
-
-import logging
-from logging.handlers import RotatingFileHandler
-import os
-
 
 app = Flask(__name__)
 
 # todo для сборки в докер заменить 127.0.0.1 на redis
-app.config["DEBUG"] = True
+app.config["DEBUG"] = False
 if app.config["DEBUG"]:
     redis = redis.StrictRedis(host="localhost", port=6379, decode_responses=True)
 else:
@@ -80,4 +78,4 @@ def server_error(e):
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=3300, debug=True)
+    app.run(host="0.0.0.0", port=3300)
