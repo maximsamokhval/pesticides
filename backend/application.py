@@ -12,7 +12,7 @@ import os
 app = Flask(__name__)
 
 # todo для сборки в докер заменить 127.0.0.1 на redis
-app.config["DEBUG"] = False
+app.config["DEBUG"] = True
 if app.config["DEBUG"]:
     redis = redis.StrictRedis(host="localhost", port=6379, decode_responses=True)
 else:
@@ -37,10 +37,10 @@ formatter = logging.Formatter(
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 
-ENDPOINT_LOGIN = os.environ.get("ENDPOINT_LOGIN", "Reader HTTP pesticides")
-ENDPOINT_PASSWORD = os.environ.get("ENDPOINT_PASSWORD", "3141592")
+ENDPOINT_LOGIN = os.environ.get("ENDPOINT_LOGIN", "")
+ENDPOINT_PASSWORD = os.environ.get("ENDPOINT_PASSWORD", "")
 API_AUTH = HTTPBasicAuth(ENDPOINT_LOGIN, ENDPOINT_PASSWORD)
-ENDPOINT = os.environ.get("ENDPOINT", "https://ib.interstarch.com.ua/interstarch/hs/pesticides/v1/status")
+ENDPOINT = os.environ.get("ENDPOINT", "http://vs-samokhval/active-substances/hs/pesticides/v1/status")
 
 @app.route('/', methods=['GET'])
 def main_page():
@@ -80,4 +80,4 @@ def server_error(e):
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=3300, debug=False)
+    app.run(host="0.0.0.0", port=3300, debug=True)
