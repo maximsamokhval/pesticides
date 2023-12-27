@@ -1,6 +1,4 @@
 build:
-	docker build -t dev/pesticides .
-compose:
-	docker-compose up
-
-
+	docker-compose build
+up:
+	docker-compose up -d
