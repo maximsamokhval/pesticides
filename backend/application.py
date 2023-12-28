@@ -10,11 +10,7 @@ from requests.auth import HTTPBasicAuth
 app = Flask(__name__)
 
 # todo для сборки в докер заменить 127.0.0.1 на redis
-app.config["DEBUG"] = False
-if app.config["DEBUG"]:
-    redis = redis.StrictRedis(host="localhost", port=6379, decode_responses=True)
-else:
-    redis = redis.StrictRedis(host="redis", port=6379, decode_responses=True)
+redis = redis.StrictRedis(host="redis", port=6379, decode_responses=True)
 
 # Настройка логгера
 logger = logging.getLogger("backend")
