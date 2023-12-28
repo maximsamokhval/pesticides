@@ -39,7 +39,7 @@
 	</h1>
 
 	<table id="table" data-group-by="true"
-	       data-group-by-field="agrochemical" data-height="900" data-toolbar="#toolbar" data-search="true"
+	       data-height="900" data-toolbar="#toolbar" data-search="true"
 	       data-show-print="true"
 	       data-searchable="true" data-show-search-clear-button="true" data-search-highlight="true"
 	       data-show-fullscreen="true" data-locale="uk-UA" class="table table-striped">
@@ -72,14 +72,14 @@
 			</li>
 		</ul>
 		<p class="text-center text-muted">© 2024 Interstarch UA</p>
-		<p class="text-center text-muted">v1.1</p>
+		<p class="text-center text-muted">v1.3</p>
 	</footer>
 
 </div>
 
 
 <script>
-    const data = JSON.parse({{ jd | tojson}})
+    const data = JSON.parse({{ jd | tojson| safe }})
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
